@@ -43,7 +43,7 @@ class MascotaSerializer(serializers.ModelSerializer):
         fields = ('id', 'nombre', 'fecha_nacimiento', 'is_hembra', 'id_raza', 'id_owner')
 
 class MascotaColoresSerializer(serializers.ModelSerializer):
-    color = serializers.CharField(source='id_color.descripcion', read_only=True)
+    color = serializers.CharField(source='id_color.descripcion', read_only=True)    
     class Meta:
         model = MascotaColores
         fields = ('id', 'id_mascota', 'id_color', 'color')

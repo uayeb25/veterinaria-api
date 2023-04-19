@@ -115,19 +115,16 @@ def mascota_incapacidad(request, id):
             ,'id_incapacidad'
         ).distinct()        
 
-        
-        df_incapacidades = pd.DataFrame(list(incapacidades))        
+        ##pip install pandas
+        df_incapacidades = pd.DataFrame(list(incapacidades))
         df_mascota_incapacidades = pd.DataFrame(list(mascota_incapacidades), columns=['id_mascota','descripcion','id_incapacidad'])
         
         df_incapacidades.columns = ['id','incapacidad']
-        df_result = df_incapacidades.merge(df_mascota_incapacidades, how='left', left_on='id', right_on='id_incapacidad')
+        df_result = df_incapacidades.merge(df_mascota_incapacidades, how='left', left_on='id', right_on='id_incapacidad')      
         
         df_result['has_incapacidad'] = False
-        df_result.loc[df_result['id_mascota'].notnull(), 'has_incapacidad'] = True
-        
-        df_result = df_result.loc[:, ['id','incapacidad','descripcion','has_incapacidad']]
-
-
+        df_result.loc[ df_result['id_mascota'].notnull() , 'has_incapacidad' ] = True
+        df_result = df_result.loc[:, ['id','incapacidad','descripcion','has_incapacidad']]       
 
         #retornamos df_incapacidades
         return JsonResponse(list(df_result.to_dict('records')), safe=False)
